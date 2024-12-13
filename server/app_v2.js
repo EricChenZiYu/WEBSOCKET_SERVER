@@ -1,3 +1,9 @@
+/**
+ * 1. grab the incoming http request data
+ * 2. calculate the server sec-websocket-accept value
+ * 3. send back appropriate headers to establish a valid websocket connection
+ * 
+ */
 const HTTP = require("node:http");
 
 const CONSTANTS = require("./custom_lib/websocket_constants.js");

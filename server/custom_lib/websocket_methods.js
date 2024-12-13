@@ -28,8 +28,19 @@ function generateServerKey(clientKey) {
 
 }
 
+// unmask the client payload
+function _unmaskPayload(payloadBuffer,maskKey) {
+    
+    //unmask the payload data using the mask key
+    for(let i = 0; i < payloadBuffer.length; i++) {
+        payloadBuffer[i] ^= maskKey[i % CONSTANTS.MASK_KEY_LENGTH];
+    }
+    return payloadBuffer;
+}
+
 module.exports = {
     isOriginAllowed,
     check,
     createUpgradeHeaders,
+    _unmaskPayload
 }

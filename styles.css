@@ -124,3 +124,10 @@ button#medium_sized_message {
     background: rgb(167, 62, 236);
     float: right
 }
+
+
+#populate{
+    background-color: purple;
+    font-size: 0.5em;
+    float: right;
+}
