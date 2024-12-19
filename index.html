@@ -8,11 +8,12 @@
             <h1>WebSockets Echo Demo</h1>
             <button type="submit" id="open_ws">Open WS</button>
             <div id="status">Status: Not connected</div>
+            <div id="server_response"></div>
             <!-- message table -->
             <ul id="table"></ul>
             <!-- form -->
             <form id="form" >
-                <textarea id="message" placeholder="Write your message here..." required></textarea>
+                <textarea id="message" placeholder="Write your message here..." ></textarea>
                 <button type="submit">Send Message</button>
                 <button id="close_ws">Close Connection</button>
          <button type="button" id="populate">Populate</button>
@@ -26,6 +27,7 @@
             let populate_btn = document.getElementById("populate")
             //form
             let form = document.getElementById("form");
+            let server_response = document.getElementById("server_response");
             // other message related items
             let socketStatus = document.getElementById("status");
             let table = document.getElementsByTagName("ul")[0];
@@ -60,6 +62,7 @@
                     console.log("SOCKET CONNECTING STATUS IS: " + socket.readyState);
                     // reset table values
                     table.innerHTML = "";
+                    server_response.innerHTML = "";
                     // provide client-side feedback
                     console.log("SOCKET CONNECTING STATUS IS: " + socket.readyState);
                     socketStatus.innerHTML = `Connected to: ${openEvent.currentTarget.url}`;
@@ -113,8 +116,30 @@
                             socketStatus.innerHTML = `Disconnected reason: ${closeEventObject.reason}`;
                             table.innerHTML = "";
                             break; 
+                        case 1002: 
+                            socketStatus.innerHTML = ` . ${closeEventObject.reason}`;
+                            table.innerHTML = "";
+                            server_response.innerHTML = `the server responsed: ${closeEventObject.reason}`;
+                            break; 
+                        case 1003: 
+                            socketStatus.innerHTML = `unsupported data type . ${closeEventObject.reason}`;
+                            table.innerHTML = "";
+                            server_response.innerHTML = `the server responsed: ${closeEventObject.reason}`;
+                            break;
+                        case 1008: 
+                            socketStatus.innerHTML = `no mask . ${closeEventObject.reason}`;
+                            table.innerHTML = "";
+                            server_response.innerHTML = `the server responsed: ${closeEventObject.reason}`;
+                            break;  
+                        case 1009: 
+                            socketStatus.innerHTML = `data too long . ${closeEventObject.reason}`;
+                            table.innerHTML = "";
+                            server_response.innerHTML = `the server responsed: ${closeEventObject.reason}`;
+                            break; 
                         default: // when the client hits the close websocket button
                             socketStatus.innerHTML = `You disconnected by clicking the Close button.`;
+                            table.innerHTML = "";
+                            server_response.innerHTML = `the server responsed: ${closeEventObject.reason}`;
                     }
 
                     // CSS: FORM REMOVAL
